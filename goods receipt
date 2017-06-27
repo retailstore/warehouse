@@ -1,0 +1,106 @@
+<!doctype html>
+<head>
+<title>Receive Shipment</title>
+<style>
+.btn {
+	color: white;
+	background: linear-gradient(rgb(71, 180, 245) 5%, hsl(202, 91%, 42%)
+		100%) rgb(71, 180, 245);
+	width: 120px;
+	height: 25px;
+}
+
+th {
+	background-color: #007CC2;
+	color: white;
+}
+
+td{
+	background-color: #C0C0C0;
+	color: white;
+	padding-left: 10px;
+}
+
+table,th,td{
+	border: 1px solid black; 
+	border-collapse: collapse; 
+}
+
+p1 {
+	font-family: Times New Roman;
+	font-style: bold;
+	font-size: 20px;
+	padding-left: 80px;
+}
+</style>
+</head>
+<body>
+	<form
+		style="border: 2px solid #1E90FF; background-color: rgba(240, 240, 240, 1); height: 400px; width: 700px;">
+		<center>
+			
+			<label style="position: relative; top: -10px; right: 10px; float:right;">Date:- <label id="thetoday"></label></label>
+			<h3 style="padding-left:18%;">P&G Warehouse (USA)</h3>
+			<input type="text"  value="Expeditor(US) ASN#" style="border:2px solid Forestgreen; width: 150px; height: 20px;"><br>
+			<br>
+			<tr>
+				<td style="padding-left: 80px;"><input type="button"
+					value="Retrive Details" onclick="#" class="btn"></td>
+			</tr>
+			</table>
+			<br>
+		</center>
+		<p1>Shipment Details</p1>
+		<center>
+			<table width=85% align="center" border=2px;  >
+				<center>
+					<div style="overflow: auto;">
+
+						<tr>
+							<th>Item Identifier</th>
+							<th>Lot#</th>
+							<th>ASN#</th>
+							<th>Stock Details</th>
+							<th>GRN#</th>
+						</tr>
+
+						<tr>
+							<td>It-Seed-Ps</td>
+							<td>1</td>
+							<td>ASNUS3107</td>
+							<td><a href="#" target=""><i>ASNUS3107</i><a></td>
+							<td>GRN 0508</td>
+						</tr>
+					</div>
+			</table>
+		</center>
+	</form>
+	<script>
+		
+		var month = new Array();
+		month[0] = "January";
+		month[1] = "February";
+		month[2] = "March";
+		month[3] = "April";
+		month[4] = "May";
+		month[5] = "June";
+		month[6] = "July";
+		month[7] = "August";
+		month[8] = "September";
+		month[9] = "October";
+		month[10] = "November";
+		month[11] = "December";
+
+			var date=new Date();
+			var mName = month[date.getMonth()];
+
+			var day=date.getDate();
+			<!-- var month=date.getMonth()+1; -->
+			var year=date.getFullYear();
+			if(day<10)
+				day="0"+day;
+			var today=mName+" "+day+", "+year;
+			document.getElementById("thetoday").innerHTML=String(today);
+	</script>
+</body>
+</html>
