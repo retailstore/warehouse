@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+    height: 53%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #A9A9A9;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav div{
+	padding: 0px 8px 8px 32px;
+     color: #696969;
+     transition: 0.3s;
+}
+
+div input[type="search"]{
+	border-radius:6px;
+    padding-left: 32px;
+    height: 35px;
+    width: 175px;
+    
+}
+div input[type="radio"]{
+	padding-left:60px;
+}
+input[type="button"]
+{
+	width:35%;
+    height:35px;
+}
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #696969;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+</head>
+<body>
+<form style="border:2px solid #1E90FF; background-color: rgba(240, 240, 240, 1); height:400px; width:850px;">
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&lt;</a>
+  <div><input type="search" placeholder="Please enter ASN#"></div>
+  <br>
+  <div style="padding-left:60px; font-weight: bold">
+  <input id="rd1" type="radio" name="radio1" value="ASNUS3107">ASNUS3107<br><br>
+  <input id="rd2" type="radio" name="radio1" value="ASNUS1504">ASNUS1504<br><br>
+  <input id="rd3" type="radio" name="radio1" value="ASNUS1404">ASNUS1404<br><br>
+  <input id="rd4" type="radio" name="radio1" value="ASNUS2903">ASNUS2903<br><br>
+  <input id="rd5" type="radio" name="radio1" value="ASNUS2803">ASNUS2803<br><br>
+  </div>
+  <br><br>
+  <center>
+  <input type="button" value="Search" onclick="#" style="color:white; background: linear-gradient(rgb(71, 180, 245) 5%, hsl(202, 91%, 42%) 100%) rgb(71, 180, 245);">
+  <input type="button" value="Check Status" onclick="getPOValue()" style="color:white; background: linear-gradient(rgb(51, 146, 58) 5%, rgb(31, 76, 34) 100%) rgb(51, 146, 58);"></center>
+</div>
+
+<div id="main">
+	<span style="font-size:30px;cursor:pointer" onclick="openNav()" id="open">&gt; </span>
+	<image src="pglogo.png" style="height: 54px; width: 54px; position: relative; top: -10px; right: 10px; float: right"><br>
+	<label style="position: relative; top: -10px; right: 10px; float:right;">Date:- <label id="thetoday"></label></label>
+	<br><br>
+	<div class="flex-container" style="display:flex">
+		<div>
+			<span style="width:200px;"><label style="background:white; color: #696969; padding-left: 10px; padding-right: 55px; padding-bottom: 3px; padding-top: 3px;">ASN#</label></span>
+			<input id="asn" type="text" onload="getPOValue()" style="border:2px solid Forestgreen; width: 98px; height: 19px;">
+		</div>
+		<br>
+		<div>
+			<span style="padding-left:20px;" class="left-padding"><label style="background:white; color: #696969; padding-left: 10px; padding-right: 83px; padding-bottom: 3px; padding-top: 3px;">Lot#</label><span>
+			<select id="selectLot" name="lot" onchange="statusPO()" style="border:2px solid Forestgreen; width: 98px; height: 23px;">
+				<option>Select</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+			<br><br>
+		</div>
+	</div>
+	<div class="flex-container" style="display:flex">
+		<div>
+			<span style="width:200px;"><label style="background:white; color: #696969; padding-left: 10px; padding-right: 65px; padding-bottom: 3px; padding-top: 3px;">PO#</label></span>
+			<input id="po" type="text" onload="getPOValue()" style="border:2px solid Forestgreen; width: 98px; height: 18px;">
+		</div>
+	</div>
+	<div id="displayDiv" style="display:none; border: 2px solid hsl(202, 91%, 42%); background: linear-gradient(#e5eaef 5%, rgb(109, 192, 241) 100%) #e5eaef"><center><p>Current Status of Lot#<label id="lot"></label> within PO#<br><label id="po1"></label></p>
+	<p>**Lot has been cleared by Expeditor US and send for delivery to P&G Warehouse**</p></center>
+	<span style="padding-left: 367px;"><input type="button" onclick="audit()" value="Click for audit trail" style="color:white; background: linear-gradient(rgb(249, 128, 71) 5%, rgb(181, 62, 5) 100%) rgb(249, 128, 71);"></div></span><br><br>
+	<center><input onclick="view()" type="button" value="View Status for all Lots" style="width: 100px; white-space: normal; color:white; background: linear-gradient(rgb(71, 180, 245) 5%, hsl(202, 91%, 42%) 100%) rgb(71, 180, 245);">
+	<span style="padding-left: 5%;"><input type="button" onclick="back()" value="Back" style="width: 100px; color:white; background: linear-gradient(rgb(71, 180, 245) 5%, hsl(202, 91%, 42%) 100%) rgb(71, 180, 245);"></span></center>
+</div>
+</form>
+<script>
+	
+	var month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+
+		var date=new Date();
+		var mName = month[date.getMonth()];
+
+		var day=date.getDate();
+		<!-- var month=date.getMonth()+1; -->
+		var year=date.getFullYear();
+		if(day<10)
+			day="0"+day;
+		var today=mName+" "+day+", "+year;
+		document.getElementById("thetoday").innerHTML=String(today);
+	
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+	document.getElementById("open").style.visibility = "hidden";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+	document.getElementById("open").style.visibility = "visible";
+
+}
+function getPOValue(){
+	if(document.getElementById("rd1").checked)
+	{
+		document.getElementById("asn").value=document.getElementById("rd1").value;
+		document.getElementById("po").value="PGPO2605";
+	}
+	if(document.getElementById("rd2").checked)
+	{
+		document.getElementById("asn").value=document.getElementById("rd2").value;
+		document.getElementById("po").value="HULPO1504";
+	}
+	if(document.getElementById("rd3").checked)
+	{
+		document.getElementById("asn").value=document.getElementById("rd3").value;
+		document.getElementById("po").value="PGPO1404";
+	}
+	if(document.getElementById("rd4").checked)
+	{
+		document.getElementById("asn").value=document.getElementById("rd4").value;
+		document.getElementById("po").value="ITPO2903";
+	}
+	if(document.getElementById("rd5").checked)
+	{
+		document.getElementById("asn").value=document.getElementById("rd5").value;
+		document.getElementById("po").value="PGPO2803";
+	}
+}
+
+function statusPO(){
+	document.getElementById("lot").innerHTML=document.getElementById("selectLot").value;
+	document.getElementById("po1").innerHTML=document.getElementById("po").value;
+	document.getElementById("displayDiv").style.display="block";
+}
+
+function audit() {
+	window.location.href = "F_audit_trail.html"
+}
+
+function back() {
+	window.location.href = "B_Welcome.html"
+}
+
+function view() {
+	window.location.href = "G_purchase_order_status.html"
+}
+</script>
+     
+</body>
+</html> 
